@@ -42,7 +42,7 @@ class TvSeriesController {
         }
         const movies = await TvSeries.insertOne(newData)
         console.log(movies.ops)
-        res.status(200).json({movies: movies.ops})
+        res.status(200).json({series: movies.ops})
     }
 
     //UpdateData

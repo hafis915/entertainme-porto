@@ -30,32 +30,52 @@ class EntertainMeController {
         }
     }
 
-    static getMovieById(req,res) {
-        const movieId = req.params.id
-        axios({
-            method: 'GET',
-            url: `http://localhost:4001/${movieId}`
-        })
-            .then(result => {
-                console.log(result.data, '============= Ini result')
-                const data = result.data
-                res.status(200).json(data)
-            })
-            .catch(e => console.log(e))
+    static async getMovieById(req,res) {
+        try {
+            const movieId = req.params.id
+            const cache = await redis.get(`${movieId}`)
+            if(cache){
+                res.status(200).json(JSON.parse(cache))
+            }else {
+                axios({
+                    method: 'GET',
+                    url: `http://localhost:4001/${movieId}`
+                })
+                    .then(({ data }) => {
+                        console.log(data, '============= Ini result')
+                        // const data = result.data
+                        redis.set(`${movieId}`, JSON.stringify(data))
+                        res.status(200).json(data)
+                    })
+                    .catch(e => console.log(e))
+            }
+            
+        } catch (error) {
+        }
     }
 
-    static getSeriesById(req,res) {
-        const seriesId = req.params.id
-        axios({
-            method: 'GET',
-            url: `http://localhost:4002/${seriesId}`
-        })
-            .then(result => {
-                console.log(result.data, '============= Ini result')
-                const data = result.data
-                res.status(200).json(data)
-            })
-            .catch(e => console.log(e))
+    static async getSeriesById(req,res) {
+        try {
+            const seriesId = req.params.id
+            const cache = await redis.get(`${seriesId}`)
+            if(cache){
+                res.status(200).json(JSON.parse(cache))
+            }else {
+                axios({
+                    method: 'GET',
+                    url: `http://localhost:4001/${seriesId}`
+                })
+                    .then(({ data }) => {
+                        console.log(data, '============= Ini result')
+                        // const data = result.data
+                        redis.set(`${seriesId}`, JSON.stringify(data))
+                        res.status(200).json(data)
+                    })
+                    .catch(e => console.log(e))
+            }
+            
+        } catch (error) {
+        }
     }
 
     static createMovie(req,res) {
@@ -78,13 +98,15 @@ class EntertainMeController {
             data: newData
         })
             .then(result => {
+                redis.del('entertain')
                 console.log(result.data)
                 res.status(200).json(result.data)
             })
     }
 
     static createSeries(req,res) {
-        const { title,
+        const { 
+            title,
             overview,
             poster_path,
             popularity,
@@ -104,6 +126,8 @@ class EntertainMeController {
         })
             .then(result => {
                 console.log(result.data)
+                redis.del('entertain')
+
                 res.status(200).json(result.data)
             })
             .catch(e => console.log(e))
@@ -131,6 +155,8 @@ class EntertainMeController {
         })
         .then(result => {
             console.log(result.data)
+            redis.del(`${id}`)
+
             res.status(200).json(result.data)
         })
         .catch(e => console.log(e))
@@ -158,6 +184,7 @@ class EntertainMeController {
         })
         .then(result => {
             console.log(result.data)
+            redis.del(`${id}`)
             res.status(200).json(result.data)
         })
         .catch(e => console.log(e))
@@ -171,6 +198,7 @@ class EntertainMeController {
         })
         .then(result => {
             console.log(result.data)
+            redis.del(`${id}`)
             res.status(200).json(result.data)
         })
         .catch(e => console.log(e))   
@@ -184,6 +212,7 @@ class EntertainMeController {
         })
         .then(result => {
             console.log(result.data)
+            redis.del(`${id}`)
             res.status(200).json(result.data)
         })
         .catch(e => console.log(e))   
