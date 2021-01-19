@@ -1,0 +1,51 @@
+.detail-container{
+    // background-color: blue;
+    display: flex;
+    margin-left: 20px;
+    margin-right: 20px;
+    img{
+        max-width: 500px;
+        max-height: 450px;
+    }
+
+    .info {
+        margin-left: 30px;
+        width: 100%;
+        // background-color: burlywood;
+        display: flex;
+        flex-direction: column;
+
+        .title{
+            display: flex;
+            flex-direction: column;
+            // background-color: cadetblue;
+            width: 100%;
+            height: 80px;
+            justify-content: center;
+            // align-items: center;
+        }
+        .detail-info {
+            display: flex;
+            flex-direction: column;
+            // align-items: center;
+            background-color: rgb(240, 240, 240, 0.5);
+            max-height: 350px;
+            .information-detail {
+                margin-top: 20px;
+                margin-left: 10%;
+                width: fit-content;
+            }
+            .button-detail {
+                margin-left: 10%;
+                margin-top: 20%;
+                margin-bottom: 5%;
+                width: 100%;
+    
+                button{
+                    margin-right: 5%;
+                }
+            }
+        }
+
+    }
+}

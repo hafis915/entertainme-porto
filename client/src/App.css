@@ -1,0 +1,37 @@
+.navbar-container {
+  display: flex;
+  justify-content: space-around;
+  background-color: azure;
+  align-items: center;
+  height: 70px;
+}
+.navbar-container .menu-navbar {
+  display: flex;
+  justify-content: space-around;
+  width: 500px;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.card {
+  max-width: 400px;
+  max-height: 50rem;
+}
+.card img {
+  margin: auto;
+  padding-top: 10px;
+}
+.card .card-body {
+  margin-top: 20px;
+}
+
+.card-img-top {
+  max-height: 300px;
+  max-width: 250px;
+}
+
+/*# sourceMappingURL=App.css.map */

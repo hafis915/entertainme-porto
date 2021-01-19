@@ -1,0 +1,48 @@
+.navbar-container{
+    display: flex;
+    justify-content: space-around;
+    background-color: azure;
+    align-items: center;
+    height: 70px;
+    .menu-navbar{
+        display: flex;
+        justify-content: space-around;
+        width: 500px;
+    }
+}
+
+.main-content {
+    display: flex;
+    background-color: blue;
+    // justify-content: space-around;
+    // align-items: center;
+
+    .add-movie-button{
+        background-color: aquamarine;
+        border: black 2px solid;
+    }
+}
+.card{
+    max-width: 400px;
+    max-height: 50rem;
+    text-align: center;
+    h5{
+        text-align: center;
+    }
+    img{
+        margin: auto;
+        padding-top: 10px;
+    }
+
+    .card-body{
+        margin-top: 20px;
+    }
+}
+
+.card-img-top{
+    max-height: 300px;
+    max-width: 250px;
+}
+.detail-container {
+    background-color: blue;
+}

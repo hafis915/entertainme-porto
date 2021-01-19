@@ -22,7 +22,29 @@ const resolvers = {
                 console.log(data, '<<<<<<<<< ini series')
                 return data.series
             }).catch( e => console.log(e))
-        }
+        },
+        movie : function getMovieById(_,args) {
+            console.log(args, "ini args")
+            const id = args.id
+            return axios({
+                method : "get",
+                url : `http://localhost:4001/${id}`
+            }).then(( { data }) => {
+                console.log(data)
+                return data.movie
+            }).catch( e => {return e})
+        },
+        serial : function getMovieById(_,args) {
+            console.log(args, "ini args")
+            const id = args.id
+            return axios({
+                method : "get",
+                url : `http://localhost:4002/${id}`
+            }).then(( { data }) => {
+                console.log(data)
+                return data.series
+            }).catch( e => {return e})
+        },
     },
     Mutation : {
         addMovie : function addMovie(_, args) {
