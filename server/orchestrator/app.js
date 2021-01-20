@@ -1,10 +1,12 @@
 const { ApolloServer, gql } = require('apollo-server')
 const axios = require('axios')
 const typeDefs = require('./typeDefs')
+const Redis = require("ioredis")
+const redis = new Redis()
 
 const resolvers = {
     Query : {
-        movies : function getMovies() {
+        movies : async function getMovies() {
             return axios({
                 method: 'GET',
                 url : 'http://localhost:4001/'

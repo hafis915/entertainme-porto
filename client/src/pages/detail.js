@@ -78,13 +78,14 @@ export default function Detail() {
             <img src={data.poster_path} alt="poster_path"/>
             <div className="info">
                 <div className="title shadow-sm p-3 mb-5 bg-white rounded">
+                    
                     <h2>{data.title} </h2>
-                        <ul>
-
-                        {data.tags.map( tag => {
-                            return <li>{tag}</li>
+                    <div className="tags">
+                    {data.tags.map( tag => {
+                            return <small>{tag}</small>
                         })}
-                        </ul>
+                    </div>
+                        
                     
                 </div>
                 <div className="detail-info ">

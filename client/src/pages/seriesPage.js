@@ -1,3 +1,4 @@
+import "./Page.css"
 import React, {useEffect} from "react"
 import { useHistory } from "react-router-dom";
 import Card from "../components/card"
@@ -16,12 +17,14 @@ export default function Series () {
     
     return (
         <>
-                    <div className="main-content">
+        <div className="main-content">
             <div className="add-movie-button">
                 <button 
                 onClick = {() => {history.push("/addMovie/series")}}
                 > Add Series</button>
             </div>
+            <div className="content">
+
             {series.series.map ( serial =>  {
                 return (
                 <Card 
@@ -30,6 +33,7 @@ export default function Series () {
                 refetch = {refetch}
                 ></Card>)
             })}
+            </div>
          </div>
         </>
     )

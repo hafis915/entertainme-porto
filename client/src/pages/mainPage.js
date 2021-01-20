@@ -13,8 +13,8 @@ function MainPage () {
 
     return(
         <>
-        {/* <p>{JSON.stringify(series.series)}</p> */}
-        <div className="main-content">
+        <div className="main-content row">
+        <div className="content">
 
             {movies.movies.map ( movie => {
                 return <Card
@@ -24,11 +24,13 @@ function MainPage () {
                 ></Card>
             })}   
             {series.series.map (serie => {
-                return <Card
+                return <Card 
+                className= "col-sm"
                 movie = {serie}
-                key = {series._id}
+                key = {serie._id}
                 ></Card>
             })}
+         </div>
          </div>
 
         </>

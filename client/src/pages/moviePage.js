@@ -1,3 +1,4 @@
+import "./Page.css"
 import React, {useEffect} from "react"
 import { useHistory } from "react-router-dom";
 import Card from "../components/card"
@@ -13,7 +14,10 @@ export default function Movie() {
         refetch()
     }, [])
     if (loading)  return <h1>Loading...</h1>
-    if (error) return <h1>{JSON.stringify(error)}</h1>
+    if (error) {
+        console.log(error)
+        return <h1>{JSON.stringify(error)}</h1>
+    }
 
     return(
         <>
@@ -23,14 +27,17 @@ export default function Movie() {
                 onClick = {() => {history.push("/addMovie/movie")}}
                 > Add Movies</button>
             </div>
-            {movies.movies.map ( movie =>  {
-                return (
-                <Card 
-                movie = {movie} 
-                key = {movie._id}
-                refetch = {refetch}
-                ></Card>)
-            })}
+            <div className="content">
+                {movies.movies.map ( movie =>  {
+                    return (
+                    <Card 
+                    movie = {movie} 
+                    key = {movie._id}
+                    refetch = {refetch}
+                    ></Card>)
+                })}
+            </div>
+            
          </div>
         </>
     )
