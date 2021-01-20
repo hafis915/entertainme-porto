@@ -1,13 +1,14 @@
 import React , {useState, useEffect} from "react"
 import {gql, useMutation, useQuery} from "@apollo/client"
 import { useHistory, useParams } from "react-router-dom"
-import { GET_MOVIE_BY_ID , EDIT_MOVIE} from "../config/query"
+import { GET_SERIES_BY_ID, EDIT_MOVIE, EDIT_SERIES} from "../config/query"
 
 
 export default function EditForm() {
     const { movieId } = useParams()
     const history = useHistory()
-    const {loading, error, data : movie} = useQuery(GET_MOVIE_BY_ID, {variables : {id : movieId}})
+
+    const {loading, error, data : movie} = useQuery(GET_SERIES_BY_ID, {variables : {id : movieId}})
     const [inputUser, setInputUser] = useState({
         title :  "",
         overview : "",
@@ -15,18 +16,19 @@ export default function EditForm() {
         popularity : 0,
         tags : []
     })
-    const [editMovie] = useMutation(EDIT_MOVIE)
+    const [editSeries] = useMutation(EDIT_SERIES)
 
     useEffect(() => {
         console.log(movie)
         console.log("use effect")
         if(movie) {
+            console.log(movie)
             setInputUser({
-                title : movie.movie.title,
-                overview : movie.movie.overview,
-                poster_path : movie.movie.poster_path,
-                popularity : movie.movie.popularity,
-                tags: movie.movie.tags
+                title : movie.serial.title,
+                overview : movie.serial.overview,
+                poster_path : movie.serial.poster_path,
+                popularity : movie.serial.popularity,
+                tags : movie.serial.tags
             })
         }
     }, [movie])
@@ -36,13 +38,13 @@ export default function EditForm() {
         inputUser.tags = inputUser.tags.split(",")
         console.log(inputUser)
         console.log(movieId)
-        editMovie({
+        editSeries({
             variables:{
                 id: movieId,
                 editedData : inputUser
             }
         })
-        history.push("/movie")
+        history.push("/series")
     }
 
     function handleChange(e) {
@@ -58,6 +60,7 @@ export default function EditForm() {
 
     return(
         <form onSubmit = {handleSubmitForm}>
+            <h1>EDIT SERIES</h1>
             <div className="mb-3">
                 <label className="form-label">Title</label>
                 <input
@@ -119,7 +122,6 @@ export default function EditForm() {
                 name = "tags"
                 />
             </div>
-
             <button type="submit" className="btn btn-primary">Submit</button>
     </form>
 

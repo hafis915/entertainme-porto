@@ -1,42 +1,47 @@
 import React, {useState} from "react"
 import {gql ,useMutation} from "@apollo/client"
-import { useHistory } from "react-router-dom"
-import { ADD_MOVIE } from "../config/query"
-
-// const ADD_MOVIE = gql`
-//     mutation AddMovie($movie: newData) {
-//         addMovie(movie : $movie) {
-//             title
-//         }
-//     }
-// `
+import { useHistory,useParams } from "react-router-dom"
+import { ADD_MOVIE , ADD_SERIES} from "../config/query"
+import { TagInput } from "reactjs-tag-input"
 
 export default function AddMovie() {
+    const {kind} = useParams()
     const [inputUser, setInputUser] = useState({
         title : "",
         overview : "",
         poster_path : "",
         popularity : 0,
-        // tags : ['coba 1', 'coba 2']
+        tags : []
     })
+    console.log(kind)
     const [addMovie] = useMutation(ADD_MOVIE)
+    const [addSeries] = useMutation(ADD_SERIES)
     const history = useHistory()
     
     function handleSubmitForm(e) {
         e.preventDefault()
+        inputUser.tags = inputUser.tags.split(",")
         console.log(inputUser)
-        addMovie({
-            variables: {
-                movie: inputUser
-            }
-        })
-        history.push("/movie")
+        if(kind === "movie") {
+            addMovie({
+                variables: {
+                    movie: inputUser
+                }
+            })
+            history.push("/movie")
+        }else {
+            addSeries({
+                variables: {
+                    series: inputUser
+                }
+            })
+            history.push("/series")
+        }
+
         
     }
 
     function handleChange(e) {
-
-
         setInputUser({
             ...inputUser,
             [e.target.name] : e.target.value
@@ -98,6 +103,18 @@ export default function AddMovie() {
         name = "popularity"
         aria-describedby="emailHelp" 
         placeholder = "0.2"
+        />
+    </div>
+
+    <div className="mb-3">
+        <label className="form-label">Tags</label>
+        <input
+        onChange = {handleChange} 
+        value = {inputUser.name}
+        type="text"
+        className="form-control" 
+        name = "tags"
+        placeholder="add minimu 2 tags seperated by coma. exp: tags1,tags2"
         />
     </div>
 

@@ -12,9 +12,9 @@ export default function Favorite() {
     return(
         <>
         <div className="main-content">
-            
         {fav.favorites.map(movie =>  {
-            return <Card movie={movie.movie} key = {movie.movie._id}></Card>           
+            // return <li>{JSON.stringify(movie)}</li>
+            return <Card movie={movie} key = {movie._id}></Card>           
         })}
         </div>
 

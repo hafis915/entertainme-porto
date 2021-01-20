@@ -9,6 +9,7 @@ import AddMovie from "./pages/addMovie"
 import Detail from "./pages/detail"
 import EditPage from "./pages/editForm"
 import Favorites from "./pages/favorite"
+import EditSeries from "./pages/editFormSeries"
 
 
 import Navbar from "./components/navbar"
@@ -28,6 +29,14 @@ function App() {
                 <MainPage></MainPage>
             </div>
           </Route>
+          
+          <Route exact path="/movie/edit/:movieId">
+              <EditPage></EditPage>
+          </Route>
+
+          <Route exact path="/series/edit/:movieId">
+             <EditSeries></EditSeries>
+          </Route>
 
           <Route exact path="/movie">
               <MoviePage></MoviePage>
@@ -37,14 +46,12 @@ function App() {
               <Detail></Detail>
           </Route>
 
-          <Route exact path="/movie/edit/:movieId">
-              <EditPage></EditPage>
-          </Route>
+
           <Route exact path="/series">
               <SeriesPage></SeriesPage>
           </Route> 
 
-          <Route exact path="/addMOvie">
+          <Route exact path="/addMovie/:kind">
               <AddMovie></AddMovie>
           </Route> 
 

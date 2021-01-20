@@ -2,7 +2,7 @@ import React, {useEffect} from "react"
 import { useHistory } from "react-router-dom";
 import Card from "../components/card"
 import { GET_MOVIES } from "../config/query"
-import { gql,useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
 
 export default function Movie() {
@@ -20,7 +20,7 @@ export default function Movie() {
         <div className="main-content">
             <div className="add-movie-button">
                 <button 
-                onClick = {() => {history.push("/addMovie")}}
+                onClick = {() => {history.push("/addMovie/movie")}}
                 > Add Movies</button>
             </div>
             {movies.movies.map ( movie =>  {

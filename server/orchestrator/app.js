@@ -34,15 +34,15 @@ const resolvers = {
                 return data.movie
             }).catch( e => {return e})
         },
-        serial : function getMovieById(_,args) {
+        serial : function getSeriesById(_,args) {
             console.log(args, "ini args")
             const id = args.id
             return axios({
                 method : "get",
                 url : `http://localhost:4002/${id}`
             }).then(( { data }) => {
-                console.log(data)
-                return data.series
+                console.log(data, "ini series")
+                return data.result
             }).catch( e => {return e})
         },
     },
@@ -89,6 +89,7 @@ const resolvers = {
 
         editMovie: function editMovie(_, args) {
             const id = args.id
+            console.log("MASUK EDITs")
             const newData = {
                 title : args.editedData.title,
                 overview : args.editedData.overview,
