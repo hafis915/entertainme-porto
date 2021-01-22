@@ -7,45 +7,73 @@ const redis = new Redis()
 const resolvers = {
     Query : {
         movies : async function getMovies() {
-            return axios({
-                method: 'GET',
-                url : 'http://localhost:4001/'
+            const cache = await redis.get("movie")
+            if(cache){
+                // console.log(cache)
+                return JSON.parse(cache)
+            }else {
+                return axios({
+                    method: 'GET',
+                    url : 'http://localhost:4001/'
+    
+                }).then (({ data }) => {
+                    console.log(data)
+                    redis.set("movie", JSON.stringify(data.movies))
+                    return data.movies
+                }).catch(e =>  console.log(e))
+            }
 
-            }).then (({ data }) => {
-                console.log(data)
-                return data.movies
-            }).catch(e =>  console.log(e))
         },
-        series : function getSeries() {
-            return axios({
-                method: 'GET',
-                url: 'http://localhost:4002/'
-            }).then(({ data }) => {
-                console.log(data, '<<<<<<<<< ini series')
-                return data.series
-            }).catch( e => console.log(e))
+        series : async function getSeries() {
+            const cache = await redis.get("series")
+            if (cache) {
+                return JSON.parse(cache)
+            }else {
+                return axios({
+                    method: 'GET',
+                    url: 'http://localhost:4002/'
+                }).then(({ data }) => {
+                    console.log(data, '<<<<<<<<< ini series')
+                    redis.set("series", JSON.stringify(data.series))
+                    return data.series
+                }).catch( e => console.log(e))
+            }
         },
-        movie : function getMovieById(_,args) {
+        movie : async function getMovieById(_,args) {
             console.log(args, "ini args")
             const id = args.id
-            return axios({
-                method : "get",
-                url : `http://localhost:4001/${id}`
-            }).then(( { data }) => {
-                console.log(data)
-                return data.movie
-            }).catch( e => {return e})
+            const cache = await redis.get(`movie_${id}`)
+            if(cache) {
+                return JSON.parse(cache)
+            }else {
+                return axios({
+                    method : "get",
+                    url : `http://localhost:4001/${id}`
+                }).then(( { data }) => {
+                    console.log(data)
+                    redis.set(`movie_${id}`, JSON.stringify(data.movie))
+                    return data.movie
+                }).catch( e => {return e})
+            }
+            
         },
-        serial : function getSeriesById(_,args) {
+        serial : async function getSeriesById(_,args) {
             console.log(args, "ini args")
             const id = args.id
-            return axios({
-                method : "get",
-                url : `http://localhost:4002/${id}`
-            }).then(( { data }) => {
-                console.log(data, "ini series")
-                return data.result
-            }).catch( e => {return e})
+            const cache = await redis.get(`series_${id}`)
+            if(cache){
+                return JSON.parse(cache)
+            }else {
+                return axios({
+                    method : "get",
+                    url : `http://localhost:4002/${id}`
+                }).then(( { data }) => {
+                    console.log(data, "ini series")
+                    redis.set(`series_${id}`, data.result)
+                    return data.result
+                }).catch( e => {return e})
+            }
+
         },
     },
     Mutation : {
@@ -64,7 +92,8 @@ const resolvers = {
                 url: 'http://localhost:4001/',
                 data: newData
             }).then(({ data }) => {
-                console.log(data)
+                redis.del("movie")
+                console.log(data, "hapus dulu")
                 return data.movies[0] 
             })
         },
@@ -84,6 +113,7 @@ const resolvers = {
                 url: 'http://localhost:4002/',
                 data: newData
             }).then(({ data }) => {
+                redis.del("series")
                 console.log(data)
                 return data.series[0] 
             })
@@ -106,13 +136,14 @@ const resolvers = {
             })
             .then(({data}) => {
                 console.log(data, "ini data")
-                // redis.del(`${id}`)
+                redis.del(`movie_${id}`)
+                redis.del("movie")
                 return data
             })
             .catch(e => console.log(e))
         },
 
-        editSeries: function editMovie(_, args) {
+        editSeries: function editSeries(_, args) {
             const id = args.id
             const newData = {
                 title : args.editedData.title,
@@ -128,7 +159,8 @@ const resolvers = {
             })
             .then(({data}) => {
                 console.log(data, "ini data")
-                // redis.del(`${id}`)
+                redis.del(`series_${id}`)
+                redis.del("series")
                 return data
             })
             .catch(e => console.log(e))
@@ -142,6 +174,8 @@ const resolvers = {
             })
             .then(({data}) => {
                 console.log(data)
+                redis.del("movie")
+                redis.del(`movie_${id}`)
                 return data
                 // redis.del(`${id}`)
                 // res.status(200).json(result.data)
@@ -156,6 +190,8 @@ const resolvers = {
                 url: `http://localhost:4002/${id}`
             })
             .then(({data}) => {
+                redis.del("series")
+                redis.del(`series_${id}`)
                 console.log(data)
                 return data
                 // redis.del(`${id}`)

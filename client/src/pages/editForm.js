@@ -33,6 +33,7 @@ export default function EditForm() {
 
     function handleSubmitForm(e) {
         e.preventDefault()
+        console.log(inputUser.tags)
         inputUser.tags = inputUser.tags.split(",")
         console.log(inputUser)
         console.log(movieId)
