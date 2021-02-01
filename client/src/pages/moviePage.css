@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap");
+.main-content {
+  font-family: "Oswald", sans-serif;
+  min-height: 40rem;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.main-content h4 {
+  font-size: 40px;
+  color: white;
+}
+
+.content {
+  display: flex;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 40px;
+}
+.content .card-content {
+  background-color: khaki;
+}
+
+/*# sourceMappingURL=moviePage.css.map */

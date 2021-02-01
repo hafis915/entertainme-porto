@@ -1,4 +1,4 @@
-import "./Page.css"
+import "./moviePage.css"
 import React, {useEffect} from "react"
 import { useHistory } from "react-router-dom";
 import Card from "../components/card"
@@ -21,13 +21,9 @@ export default function Movie() {
 
     return(
         <>
-        <div className="main-content">
-            <div className="add-movie-button">
-                <button 
-                onClick = {() => {history.push("/addMovie/movie")}}
-                > Add Movies</button>
-            </div>
-            <div className="content">
+        <div className="main-content">  
+            <h4>Movies List</h4>
+            <div className="content row">
                 {movies.movies.map ( movie =>  {
                     return (
                     <Card 
@@ -37,7 +33,12 @@ export default function Movie() {
                     ></Card>)
                 })}
             </div>
-            
+            <div className="add-movie-button">
+                <button 
+                className = "btn btn-primary"
+                onClick = {() => {history.push("/addMovie/movie")}}
+                > Add New Movies</button>
+            </div>
          </div>
         </>
     )

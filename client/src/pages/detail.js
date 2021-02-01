@@ -1,5 +1,8 @@
-import "./Page.css"
+import "./detail.css"
 import React, {useState} from "react"
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { useParams, useHistory } from "react-router-dom"
 import { useQuery, useMutation } from "@apollo/client"
 import { GET_MOVIE_BY_ID, DELETE_MOVIE , GET_SERIES_BY_ID, DELETE_SERIES} from "../config/query"
@@ -17,10 +20,13 @@ export default function Detail() {
     const [isFav, setIsFav] = useState(false)
     const [deleteMovie]  = useMutation(DELETE_MOVIE)
     const [deleteSeries]  = useMutation(DELETE_SERIES)
+    console.log(movieId, "ini movie id")
 
     if(movieLoading || seriesLoading) return <h1>Loading...</h1>
     if(movieError || seriesError) return <h2>ERROR</h2>
     let data
+    console.log(movie)
+    console.log(series, "<<<<<<<<")
 
     if(movie.movie) {
         data = movie.movie
@@ -45,7 +51,6 @@ export default function Detail() {
             history.push(`/movie/edit/${id}`)
         }else {
             history.push(`/series/edit/${id}`)
-
         }
     }
 
@@ -73,49 +78,51 @@ export default function Detail() {
 
     }
     return(
-        <>
-        <div className="detail-container shadow p-3 mb-5 bg-white rounded">
-            <img src={data.poster_path} alt="poster_path"/>
-            <div className="info">
-                <div className="title shadow-sm p-3 mb-5 bg-white rounded">
-                    
-                    <h2>{data.title} </h2>
-                    <div className="tags">
-                    {data.tags.map( tag => {
-                            return <small>{tag}</small>
-                        })}
-                    </div>
-                        
-                    
+        <div className="detail-container">
+            <div className="detail-content">
+                <div className="detail-image">
+                <img 
+                src={data.poster_path} alt="poster_path"
+                />
                 </div>
-                <div className="detail-info ">
-                    <div className="information-detail">
-                        <h5>Overview : {data.overview}</h5>
-                        <h5>Popularity : {data.popularity}</h5>
+                <div className="info">
+                    <div className="title">
+                        <h2>{data.title} </h2>
+                        <div className="tags">
+                        {data.tags.map( tag => {
+                                return <small>{tag}</small>
+                            })}
+                        </div>
                     </div>
-                    <div className="button-detail">
-                        {!isFav && 
-                        <button
-                        onClick= {handleAddFav}
-                        >add to favorite</button>
-                        }
 
-                        <button 
-                        className="btn btn-primary"
-                        onClick= {() => {handleEditButton(data._id)}}
-                        > Edit</button>
+                    <div className="detail-info ">
+                        <div className="information-detail">
+                            <h5>Overview : {data.overview}</h5>
+                            <h5>Popularity : {data.popularity}</h5>
+                        </div>
+                        <div className="button-detail">
+                            {!isFav && 
+                            <FavoriteIcon
+                            className = "detail-button"
+                            onClick= {handleAddFav}
+                            ></FavoriteIcon>
+                            }
 
+                            <EditIcon
+                            className = "detail-button"
+                            onClick= {() => {handleEditButton(data._id)}}
+                            ></EditIcon>
 
+                            <DeleteIcon
+                            className = "detail-button"
+                            onClick ={() => handleDeleteData(data._id)}
+                            ></DeleteIcon>
 
-                        <button 
-                        className="btn btn-danger"
-                        onClick ={() => handleDeleteData(data._id)}
-                        > delete</button>
+                        </div>
                     </div>
                 </div>
-
             </div>
+
         </div>
-        </>
     )
 }

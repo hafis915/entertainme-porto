@@ -1,0 +1,18 @@
+.main-content {
+  /* background-color: #4D4B4B; */
+  min-height: 40rem;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  display: flex;
+  margin-top: 80px;
+  margin-left: 20px;
+}
+.content .card-content {
+  background-color: khaki;
+}
+
+/*# sourceMappingURL=mainpage.css.map */
