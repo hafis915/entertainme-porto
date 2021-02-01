@@ -1,0 +1,24 @@
+.card-component{
+    background-color: #30475E;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    width: 16rem;
+    margin-left: 15px;
+    margin-top: 15px;
+    .card-image{
+        padding-top: 10px;
+        height: 250px;
+        width: 10rem;
+    }
+    .card-body {
+        color: white;
+    }
+}
+.link-card {
+    flex-direction: column;
+    align-items: center;
+    color:inherit;
+    text-decoration: none;
+}
+// style={{width: "18rem", marginLeft: "15px"}}

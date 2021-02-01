@@ -1,3 +1,5 @@
+import "./moviePage.css"
+
 import React from "react"
 import { useQuery } from "@apollo/client";
 import { GET_FAVORITE } from "../config/query"
@@ -10,14 +12,14 @@ export default function Favorite() {
     if(loading) return <h1>loading</h1>
     if(error) return <h1>{JSON.stringify(error)}</h1>
     return(
-        <>
         <div className="main-content">
-        {fav.favorites.map(movie =>  {
-            // return <li>{JSON.stringify(movie)}</li>
-            return <Card movie={movie} key = {movie._id}></Card>           
-        })}
+            <h4>Your Favorites</h4>
+            <div className="content row">
+            {fav.favorites.map(movie =>  {
+                return <Card movie={movie} key = {movie._id}></Card>           
+            })}
+            </div>
         </div>
 
-        </>
     )
 }

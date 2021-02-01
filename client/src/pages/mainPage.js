@@ -1,4 +1,4 @@
-import "./Page.css"
+import "./mainpage.css"
 import React from 'react'
 import { GET_MOVIES, GET_SERIES } from "../config/query"
 import Card from "../components/card"
@@ -12,10 +12,9 @@ function MainPage () {
 
 
     return(
-        <>
-        <div className="main-content row">
-        <div className="content">
-
+        <> 
+        <div className="main-content">
+        <div className="content row">
             {movies.movies.map ( movie => {
                 return <Card
                 movie = {movie}
@@ -25,14 +24,12 @@ function MainPage () {
             })}   
             {series.series.map (serie => {
                 return <Card 
-                className= "col-sm"
                 movie = {serie}
                 key = {serie._id}
                 ></Card>
             })}
          </div>
          </div>
-
         </>
     )
 }
